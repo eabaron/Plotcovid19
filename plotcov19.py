@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 22 15:33:44 2020
+## Modified at:   Fri May 22 15:38:01 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -110,3 +110,6 @@ if __name__ == '__main__':
     mystate = input("Give State (return to end): ")
     if mystate == "": break
     explore_cases(mystate,df,fig,ax)
+
+  # Clean up if run again
+  del fig,ax
