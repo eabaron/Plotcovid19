@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 22 15:38:01 2020
+## Modified at:   Fri May 22 16:54:02 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -28,7 +28,7 @@ def my_plt_setup(win=1):
 
   figprops = dict(figsize=(8., 8./ golden ), dpi=128)    # Figure properties for single and stacked plots 
   # figprops = dict(figsize=(16., 8./golden), dpi=128)    # Figure properties for side by sides
-  adjustprops = dict(left=0.15, bottom=0.1, right=0.90, top=0.93, wspace=0.2, hspace=0.2)       # Subp
+  adjustprops = dict(left=0.15, bottom=0.15, right=0.90, top=0.93, wspace=0.2, hspace=0.2)       # Subp
 
   fig = pylab.figure(win,**figprops)   # New figure
   # fig.clf()
@@ -60,7 +60,7 @@ def get_cases():
 
   return df
 
-def explore_cases(mystate,df,fig,ax):
+def explore_cases(mystate,df):
   if len(mystate) == 2:
     if mystate == 'US':
       dfok = df
@@ -78,7 +78,8 @@ def explore_cases(mystate,df,fig,ax):
     jd.append(datestdtojd(_))
   
   jd = np.asarray(jd)
-    
+  fig,ax = my_plt_setup()
+
   ns = 0  
   while ns >= 0:
     ns = int(input("Give Window length (-1 to end): "))
@@ -105,11 +106,8 @@ def explore_cases(mystate,df,fig,ax):
 if __name__ == '__main__':
   df = get_cases()
   mystate = ' '
-  fig,ax = my_plt_setup()
   while mystate != "":
     mystate = input("Give State (return to end): ")
     if mystate == "": break
-    explore_cases(mystate,df,fig,ax)
+    explore_cases(mystate,df)
 
-  # Clean up if run again
-  del fig,ax
