@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 22 15:12:38 2020
+## Modified at:   Fri May 22 15:33:44 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -76,12 +76,13 @@ def explore_cases(mystate,df,fig,ax):
   jd = []
   for _ in dates.values:
     jd.append(datestdtojd(_))
+  
+  jd = np.asarray(jd)
     
   ns = 0  
   while ns >= 0:
     ns = int(input("Give Window length (-1 to end): "))
     if ns < 0: break
-    jd = np.asarray(jd)
     # ax.plot(jd,diffs,'o:')
     ax.bar(jd,diffs,label=mystate)
     xrun,yrun = boxcar(jd,diffs,ns)
