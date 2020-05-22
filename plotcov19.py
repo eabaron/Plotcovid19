@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 22 16:54:02 2020
+## Modified at:   Fri May 22 17:11:02 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -76,12 +76,12 @@ def explore_cases(mystate,df):
   jd = []
   for _ in dates.values:
     jd.append(datestdtojd(_))
-  
   jd = np.asarray(jd)
-  fig,ax = my_plt_setup()
+  
 
   ns = 0  
   while ns >= 0:
+    fig,ax = my_plt_setup()
     ns = int(input("Give Window length (-1 to end): "))
     if ns < 0: break
     # ax.plot(jd,diffs,'o:')
@@ -100,7 +100,7 @@ def explore_cases(mystate,df):
     ax.legend()
     bold_labels(ax)
     pylab.show()
-  
+    del fig,ax
 
 
 if __name__ == '__main__':
