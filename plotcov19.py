@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 22 17:11:02 2020
+## Modified at:   Sat May 23 10:31:40 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -23,7 +23,6 @@ def boxcar(x,y,n):
   return xsmooth,ysmooth
 
 def my_plt_setup(win=1):
-  import pylab
   golden = (np.sqrt(5.)+1.)/2.
 
   figprops = dict(figsize=(8., 8./ golden ), dpi=128)    # Figure properties for single and stacked plots 
@@ -102,6 +101,47 @@ def explore_cases(mystate,df):
     pylab.show()
     del fig,ax
 
+def make_postage(df):
+  
+  figprops = dict(figsize=(8, 8 ), dpi=300)   
+  adjustprops = dict(left=0.05, bottom=0.05, right=0.90, top=0.93, wspace=0.0, hspace=0.0)       # Subp
+
+  win = 1
+  fig = pylab.figure(win,**figprops)   # New figure
+  fig.subplots_adjust(**adjustprops)  # Tunes the subplot layout
+  i = 0
+  for mystate in np.sort(df.State.unique()):
+    i +=1
+    ax = fig.add_subplot(7, 8, i)
+    dfok = df[df.State == mystate]
+    cols = [ _ for _ in range(4,len(df.loc[0]))]
+    sum = dfok.iloc[:,cols].sum(axis=0,skipna=True)
+    diffs = np.diff(sum)
+    dates = sum.index[1:]
+
+    if i == 1:
+      jd = list()
+      for _ in dates.values:
+        jd.append(datestdtojd(_))
+      jd = np.asarray(jd)
+  
+
+    ns = 10
+    md = pd.Series(index=dates,data=diffs)
+    run = md.rolling(ns).mean()
+    myleg_ = str(ns) +  " day running average"
+    ax.plot(jd,run.values,'r',label=mystate)
+    ax.legend(fontsize='xx-small',frameon=False,markerscale=0.1,loc='best')
+    # bold_labels(ax)
+    xtl = ax.get_xticklabels()
+    ytl = ax.get_yticklabels()
+    for xtl_,ytl_ in zip(xtl,ytl):
+      xtl_.set_visible(False)
+      ytl_.set_visible(False)
+
+      
+  pylab.show()
+  fig.savefig('all51.png')
 
 if __name__ == '__main__':
   df = get_cases()
@@ -111,3 +151,5 @@ if __name__ == '__main__':
     if mystate == "": break
     explore_cases(mystate,df)
 
+  pylab.clf()
+  make_postage(df)
