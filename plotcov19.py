@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sat May 23 10:31:40 2020
+## Modified at:   Sat May 23 14:09:01 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -110,10 +110,23 @@ def make_postage(df):
   fig = pylab.figure(win,**figprops)   # New figure
   fig.subplots_adjust(**adjustprops)  # Tunes the subplot layout
   i = 0
-  for mystate in np.sort(df.State.unique()):
+  mylist = list(np.sort(df.State.unique()))
+  mylist.append("US")
+  mylist.append("!NY")
+
+  for mystate in mylist: 
+    if len(mystate) == 2:
+
+      if mystate == 'US':
+        dfok = df
+      else:
+        dfok = df[df.State == mystate ]
+
+    else:
+      dfok = df[df.State != mystate[1:]]
+
     i +=1
     ax = fig.add_subplot(7, 8, i)
-    dfok = df[df.State == mystate]
     cols = [ _ for _ in range(4,len(df.loc[0]))]
     sum = dfok.iloc[:,cols].sum(axis=0,skipna=True)
     diffs = np.diff(sum)
@@ -130,8 +143,21 @@ def make_postage(df):
     md = pd.Series(index=dates,data=diffs)
     run = md.rolling(ns).mean()
     myleg_ = str(ns) +  " day running average"
-    ax.plot(jd,run.values,'r',label=mystate)
-    ax.legend(fontsize='xx-small',frameon=False,markerscale=0.1,loc='best')
+    if len(mystate) < 3:
+      mylab_ = mystate
+    else:
+      mylab_ = "US \n w/o NY"
+    ax.plot(jd,run.values,'r',label=mylab_)
+    ax.legend(fontsize='xx-small',frameon=False,\
+              markerscale=0.1,loc='best',handlelength=0)
+    # handles, labels = ax.get_legend_handles_labels()
+    # for h in handles:
+    #   h.set_linestyle("")
+    #   h.set_fontsize='xx-small'
+    #   h.set_frameon=False
+    #   h.set_markerscale=0.1
+    #   h.set_loc='best'
+    # ax.legend(handles, labels)
     # bold_labels(ax)
     xtl = ax.get_xticklabels()
     ytl = ax.get_yticklabels()
@@ -139,8 +165,7 @@ def make_postage(df):
       xtl_.set_visible(False)
       ytl_.set_visible(False)
 
-      
-  pylab.show()
+  pylab.show()      
   fig.savefig('all51.png')
 
 if __name__ == '__main__':
