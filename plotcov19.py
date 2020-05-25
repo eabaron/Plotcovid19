@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sat May 23 15:40:52 2020
+## Modified at:   Mon May 25 09:59:50 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -104,7 +104,7 @@ def explore_cases(mystate,df):
 def make_postage(df):
   
   figprops = dict(figsize=(8, 8 ), dpi=600)   
-  adjustprops = dict(left=0.05, bottom=0.05, right=0.90, top=0.93, wspace=0.0, hspace=0.0)       # Subp
+  adjustprops = dict(left=0.1, bottom=0.1, right=0.90, top=0.93, wspace=0.0, hspace=0.0)       # Subp
 
   win = 1
   fig = pylab.figure(win,**figprops)   # New figure
@@ -165,6 +165,8 @@ def make_postage(df):
       xtl_.set_visible(False)
       ytl_.set_visible(False)
 
+  fig.text(0.5, 0.04, 'Day of 2020', ha='center')
+  fig.text(0.04, 0.5, 'New Cases/day', va='center', rotation='vertical')
   pylab.show()      
   fig.savefig('all51.png',dpi=600)
 
