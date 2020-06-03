@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Mon May 25 09:59:50 2020
+## Modified at:   Fri May 29 08:48:54 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -99,7 +99,7 @@ def explore_cases(mystate,df):
     ax.legend()
     bold_labels(ax)
     pylab.show()
-    del fig,ax
+    pylab.clf()
 
 def make_postage(df):
   
@@ -107,6 +107,7 @@ def make_postage(df):
   adjustprops = dict(left=0.1, bottom=0.1, right=0.90, top=0.93, wspace=0.0, hspace=0.0)       # Subp
 
   win = 1
+  myc_ = list()
   fig = pylab.figure(win,**figprops)   # New figure
   fig.subplots_adjust(**adjustprops)  # Tunes the subplot layout
   i = 0
@@ -147,7 +148,12 @@ def make_postage(df):
       mylab_ = mystate
     else:
       mylab_ = "US \n w/o NY"
-    ax.plot(jd,run.values,'r',label=mylab_)
+    chelp = run.values[~np.isnan(run.values)].max()
+    cmax = 20000.
+    c = pylab.cm.jet(chelp/cmax)
+    myc_.append(c)
+    # print(c,chelp,chelp/cmax,run.values.shape)
+    ax.plot(jd,run.values,color=c,label=mylab_)
     ax.legend(fontsize='xx-small',frameon=False,\
               markerscale=0.1,loc='best',handlelength=0)
     # handles, labels = ax.get_legend_handles_labels()
@@ -167,6 +173,10 @@ def make_postage(df):
 
   fig.text(0.5, 0.04, 'Day of 2020', ha='center')
   fig.text(0.04, 0.5, 'New Cases/day', va='center', rotation='vertical')
+  m = pylab.cm.ScalarMappable(cmap=pylab.cm.jet)
+  m.set_array([])
+  cb_ax = fig.add_axes([.92, 0.1, 0.02, 0.8])
+  cbar = fig.colorbar(m, cax=cb_ax)
   pylab.show()      
   fig.savefig('all51.png',dpi=600)
 
