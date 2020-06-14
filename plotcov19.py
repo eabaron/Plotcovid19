@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Fri May 29 08:48:54 2020
+## Modified at:   Sun Jun 14 07:15:07 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -87,9 +87,10 @@ def explore_cases(mystate,df):
     ax.bar(jd,diffs,label=mystate)
     xrun,yrun = boxcar(jd,diffs,ns)
     # ax.plot(xrun,yrun)
-    ymax = 150
-    if mystate == 'OK':
-      ax.set_ylim([0,ymax])
+    # ymax = 150
+    # if mystate == 'OK':
+    #   ax.set_ylim([0,ymax])
+    ax.set_xlim([70,jd.max()//10*10+10])
     md = pd.Series(index=dates,data=diffs)
     run = md.rolling(ns).mean()
     myleg_ = str(ns) +  " day running average"
@@ -165,6 +166,7 @@ def make_postage(df):
     #   h.set_loc='best'
     # ax.legend(handles, labels)
     # bold_labels(ax)
+    ax.set_xlim([70,jd.max()//10*10+10])
     xtl = ax.get_xticklabels()
     ytl = ax.get_yticklabels()
     for xtl_,ytl_ in zip(xtl,ytl):
