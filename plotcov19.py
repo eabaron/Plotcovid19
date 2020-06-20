@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sun Jun 14 07:15:07 2020
+## Modified at:   Sat Jun 20 18:09:59 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -149,7 +149,8 @@ def make_postage(df):
       mylab_ = mystate
     else:
       mylab_ = "US \n w/o NY"
-    chelp = run.values[~np.isnan(run.values)].max()
+    # chelp = run.values[~np.isnan(run.values)].max()
+    chelp = run.values[~np.isnan(run.values)][-1]
     cmax = 20000.
     c = pylab.cm.jet(chelp/cmax)
     myc_.append(c)
