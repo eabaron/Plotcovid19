@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sun Jun 21 09:30:37 2020
+## Modified at:   Sun Jun 21 10:36:48 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -175,12 +175,14 @@ def make_postage(df):
       ytl_.set_visible(False)
 
   fig.text(0.5, 0.04, 'Day of 2020', ha='center')
+  fig.text(0.8, 0.01, 'Color indicates current y-value', ha='center')
   fig.text(0.04, 0.5, 'New Cases/day', va='center', rotation='vertical')
   m = pylab.cm.ScalarMappable(cmap=pylab.cm.jet)
   m.set_array([])
   cb_ax = fig.add_axes([.92, 0.1, 0.02, 0.8])
   cbar = fig.colorbar(m, cax=cb_ax)
   m.set_clim(0,2.e4)
+  # cbar.ax.set_yticklabels(["{:.1e}".format(i) for i in cbar.get_ticks()])
   pylab.show()      
   fig.savefig('all51.png',dpi=600)
 
