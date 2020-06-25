@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Thu Jun 25 08:50:10 2020
+## Modified at:   Thu Jun 25 10:56:47 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -128,7 +128,13 @@ def make_postage(df):
       dfok = df[df.State != mystate[1:]]
 
     i +=1
-    ax = fig.add_subplot(7, 8, i)
+    if i <=51:
+      ax = fig.add_subplot(7, 8, i)
+    elif i == 52:
+      ax = fig.add_subplot(7, 8, 53)
+    elif i == 53:
+      ax = fig.add_subplot(7, 8, 55)
+      
     cols = [ _ for _ in range(4,len(df.loc[0]))]
     sum = dfok.iloc[:,cols].sum(axis=0,skipna=True)
     diffs = np.diff(sum)
@@ -174,7 +180,8 @@ def make_postage(df):
     for xtl_,ytl_ in zip(xtl,ytl):
       if i <= 48:
         xtl_.set_visible(False)
-      ytl_.set_visible(False)
+      if i < 52:
+        ytl_.set_visible(False)
 
   fig.text(0.5, 0.04, 'Day of 2020', ha='center')
   fig.text(0.8, 0.01, 'Color indicates current y-value', ha='center')
