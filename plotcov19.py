@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sun Jun 21 10:36:48 2020
+## Modified at:   Thu Jun 25 08:50:10 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -151,7 +151,7 @@ def make_postage(df):
       mylab_ = "US \n w/o NY"
     # chelp = run.values[~np.isnan(run.values)].max()
     chelp = run.values[~np.isnan(run.values)][-1]
-    cmax = 20000.
+    cmax = 5000.
     c = pylab.cm.jet(chelp/cmax)
     myc_.append(c)
     # print(c,chelp,chelp/cmax,run.values.shape)
@@ -168,10 +168,12 @@ def make_postage(df):
     # ax.legend(handles, labels)
     # bold_labels(ax)
     ax.set_xlim([70,jd.max()//10*10+10])
+    ax.tick_params(axis='x',labelsize=6)
     xtl = ax.get_xticklabels()
     ytl = ax.get_yticklabels()
     for xtl_,ytl_ in zip(xtl,ytl):
-      xtl_.set_visible(False)
+      if i <= 48:
+        xtl_.set_visible(False)
       ytl_.set_visible(False)
 
   fig.text(0.5, 0.04, 'Day of 2020', ha='center')
@@ -181,7 +183,7 @@ def make_postage(df):
   m.set_array([])
   cb_ax = fig.add_axes([.92, 0.1, 0.02, 0.8])
   cbar = fig.colorbar(m, cax=cb_ax)
-  m.set_clim(0,2.e4)
+  m.set_clim(0,cmax)
   # cbar.ax.set_yticklabels(["{:.1e}".format(i) for i in cbar.get_ticks()])
   pylab.show()      
   fig.savefig('all51.png',dpi=600)
