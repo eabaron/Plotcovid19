@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Thu Jun 25 10:56:47 2020
+## Modified at:   Thu Jul  2 08:56:21 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -48,7 +48,10 @@ def bold_labels(ax,fontsize=None):
 
 def datestdtojd (stddate):
     fmt='%m/%d/%y'
-    sdtdate = datetime.datetime.strptime(stddate, fmt)
+    try:
+      sdtdate = datetime.datetime.strptime(stddate, fmt)
+    except:
+      return
     sdtdate = sdtdate.timetuple()
     jdate = sdtdate.tm_yday
     return(jdate)
@@ -56,7 +59,10 @@ def datestdtojd (stddate):
 def get_cases():
 
   df = pd.read_csv('https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv')
-
+  try:
+    df = df.drop(columns = ['Unnamed: 165'],axis=1)
+  except:
+    pass
   return df
 
 def explore_cases(mystate,df):
@@ -74,7 +80,8 @@ def explore_cases(mystate,df):
   dates = sum.index[1:]
   jd = []
   for _ in dates.values:
-    jd.append(datestdtojd(_))
+    if '/' in _:
+      jd.append(datestdtojd(_))
   jd = np.asarray(jd)
   
 
@@ -193,7 +200,7 @@ def make_postage(df):
   m.set_clim(0,cmax)
   # cbar.ax.set_yticklabels(["{:.1e}".format(i) for i in cbar.get_ticks()])
   pylab.show()      
-  fig.savefig('all51.png',dpi=600)
+  fig.savefig('all51.png',dpi=300)
 
 if __name__ == '__main__':
   df = get_cases()
