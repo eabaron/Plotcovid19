@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Thu Jul  2 08:56:21 2020
+## Modified at:   Sat Jul 18 10:46:00 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -164,7 +164,7 @@ def make_postage(df):
       mylab_ = "US \n w/o NY"
     # chelp = run.values[~np.isnan(run.values)].max()
     chelp = run.values[~np.isnan(run.values)][-1]
-    cmax = 5000.
+    cmax = 15000.
     c = pylab.cm.jet(chelp/cmax)
     myc_.append(c)
     # print(c,chelp,chelp/cmax,run.values.shape)
@@ -184,11 +184,13 @@ def make_postage(df):
     ax.tick_params(axis='x',labelsize=6)
     xtl = ax.get_xticklabels()
     ytl = ax.get_yticklabels()
-    for xtl_,ytl_ in zip(xtl,ytl):
+    for xtl_ in xtl:
       if i <= 48:
         xtl_.set_visible(False)
+    for ytl_ in ytl[:-1]:
       if i < 52:
         ytl_.set_visible(False)
+    ytl[-1].set_visible(True)
 
   fig.text(0.5, 0.04, 'Day of 2020', ha='center')
   fig.text(0.8, 0.01, 'Color indicates current y-value', ha='center')
