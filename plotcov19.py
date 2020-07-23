@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sat Jul 18 10:46:00 2020
+## Modified at:   Sun Jul 19 09:35:32 2020
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
