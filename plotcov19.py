@@ -3,7 +3,7 @@
 ## Filename:      plotcov19.py
 ## Author:        Eddie Baron <baron@ou.edu>
 ## Created at:    Fri May 22 09:30:20 2020
-## Modified at:   Sun Jan  3 16:00:37 2021
+## Modified at:   Sun Jan  3 16:33:17 2021
 ## Modified by:   Eddie Baron <baron@ou.edu>
 ## Description:   
 ######################################################################
@@ -134,7 +134,7 @@ def explore_cases(mystate,df):
     # if mystate == 'OK':
     #   ax.set_ylim([0,ymax])
     # ax.set_xlim([70,jd.max()//10*10+10])
-    ax.set_xlim([0,jd.max()+10])
+    ax.set_xlim([0,jd.max()//10*10+10])
     md = pd.Series(index=dates,data=diffs)
     run = md.rolling(ns).mean()
     myleg_ = str(ns) +  " day running average"
@@ -219,7 +219,7 @@ def make_postage(df):
     # ax.legend(handles, labels)
     # bold_labels(ax)
     # ax.set_xlim([70,jd.max()//10*10+10])
-    ax.set_xlim([0,jd.max()+10])
+    ax.set_xlim([0,jd.max()//10*10+10])
     ax.tick_params(axis='x',labelsize=6)
     xtl = ax.get_xticklabels()
     ytl = ax.get_yticklabels()
